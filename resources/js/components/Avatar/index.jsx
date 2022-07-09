@@ -1,28 +1,19 @@
 import * as React from 'react';
 import PropTypes from "prop-types";
 import "./styles/style.css";
-
-function initials(name) {
-    let rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu');
-
-    let initials = name ? [...name.matchAll(rgx)] || [] : [];
-
-    initials = (
-        (initials.shift()?.[1] || '') + (initials.pop()?.[1] || '')
-    ).toUpperCase();
-
-    return name ? initials : "U";
-}
+import defaultImage from './assets/default.png';
 
 function Avatar({src}) {
     const [image, setImage] = React.useState(null)
     const [imageExists, setImageExists] = React.useState(false);
 
-    const content = (
+    return(
         <div>
             <img 
-                src={src ?? './assets/default.png'}
+                src={src ?? defaultImage}
                 className='avatar-container'
+                width='100px'
+                height='100px'
             ></img>
         </div>    
     )
