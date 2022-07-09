@@ -24,9 +24,12 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "@emotion/react": "^11.9.3",
+        "@emotion/styled": "^11.9.3",
         "@inertiajs/inertia": "^0.11.0",
         "@inertiajs/inertia-react": "^0.8.0",
         "@inertiajs/progress": "^0.2.7",
+        "@mui/material": "^5.8.7",
         "ziggy-js": "^1.4.6"
     }
 }
