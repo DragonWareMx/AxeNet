@@ -1,6 +1,5 @@
 import Layout from '../../layouts/Layout'
 import * as React from 'react';
-import Container from '@mui/material/Container';
 import Avatar from '../../components/Avatar';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 
