@@ -4,6 +4,7 @@ import Avatar from '../../components/Avatar';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import Calendar from 'react-calendar';
 import './styles/calendarStyle.css'
+import { borderBottom } from '@mui/system';
 // import 'react-calendar/dist/Calendar.css';
 
 const Profile = ({  }) => {
@@ -40,6 +41,38 @@ const Profile = ({  }) => {
                         <Grid container>
                             <Grid item xs={12} md={7}>
                                 <Calendar style={{width:'100%'}} />
+                            </Grid>
+                            <Grid item xs={12} md={5} >
+                                <Typography align='center' style={{marginBottom:20}}>NOTAS</Typography>
+                                <div style={{overflowY:'scroll',maxHeight:210}}>
+                                    <li 
+                                        style={{
+                                            width:'100%',
+                                            borderBottom:'1px #2b70ce solid',
+                                            marginBottom: 5
+                                        }}
+                                    >
+                                        <Typography>Título nota 1</Typography>
+                                    </li>
+                                    <li 
+                                        style={{
+                                            width:'100%',
+                                            borderBottom:'1px #2b70ce solid',
+                                            marginBottom:5
+                                        }}
+                                    >
+                                        <Typography>Título nota 2</Typography>
+                                    </li>
+                                    <li 
+                                        style={{
+                                            width:'100%',
+                                            borderBottom:'1px #2b70ce solid',
+                                            marginBottom:5
+                                        }}
+                                    >
+                                        <Typography>Título nota 3</Typography>
+                                    </li>
+                                </div>
                             </Grid>
                         </Grid>
                     </CardContent>

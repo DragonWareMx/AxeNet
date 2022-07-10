@@ -6,6 +6,11 @@
 
 .react-calendar__navigation{
     font-size: 18px;
+    padding-left: 20px;
+}
+
+.react-calendar__navigation__arrow{
+    color:#2b70ce;
 }
 
 .react-calendar button, select{
@@ -19,7 +24,7 @@
 }
 
 .react-calendar__tile--active{
-    color: white;
+    color: white !important;
     background-color: #2b70ce !important;
 }
 
@@ -36,4 +41,28 @@
 
 .react-calendar__month-view__weekdays__weekday abbr{
     text-decoration: none;
+}
+
+.react-calendar__tile--now{
+    color: #2b70ce;
+}
+
+.react-calendar__navigation__label__labelText{
+    color: #2b70ce;
+}
+
+.react-calendar__navigation__next2-button{
+    display: none;
+}
+
+.react-calendar__navigation__prev2-button{
+    display: none;
+}
+
+.react-calendar__navigation__next-button{
+    font-size: 20px !important;
+}
+
+.react-calendar__navigation__prev-button{
+    font-size: 20px !important;
 }
