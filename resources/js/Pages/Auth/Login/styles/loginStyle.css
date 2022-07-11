@@ -1,0 +1,64 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.grid-login{
+    min-height: 100vh;
+}
+
+.fondo{
+    background-image: url('/images/Fondo_Intra.png');
+    background-size: cover;
+}
+
+.login-paper{
+    position: relative;
+    padding: 20px 10px 200px 10px;
+    border: 2px white solid;
+    width: 100%;
+    color: white !important;
+    background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.login-square{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 1;
+}
+
+.header-login{
+    display: flex;
+    justify-content: space-between;
+}
+
+.container-inputs-login{
+    padding: 40px 15%;
+}
+
+.login-buttons-container{
+    position: absolute;
+    min-height: 200px;
+    z-index: 2;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+}
