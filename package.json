@@ -31,6 +31,7 @@
         "@inertiajs/progress": "^0.2.7",
         "@mui/icons-material": "^5.8.4",
         "@mui/material": "^5.8.7",
+        "react-calendar": "^3.7.0",
         "ziggy-js": "^1.4.6"
     }
 }

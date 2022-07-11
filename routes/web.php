@@ -30,3 +30,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/profile',function (){
     return Inertia::render('Profile');
 });
+
+
+Route::get('/calendar',function (){
+    return Inertia::render('Calendar');
+});
