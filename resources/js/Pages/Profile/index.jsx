@@ -2,7 +2,7 @@ import Layout from '../../layouts/Layout'
 import * as React from 'react';
 import Container from '@mui/material/Container';
 import Avatar from '../../components/Avatar';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Toolbar, Typography } from '@mui/material';
 
 const Profile = ({  }) => {
 
@@ -48,6 +48,8 @@ const Profile = ({  }) => {
                 <Typography>Dirección: </Typography>
                 <Typography>Chupaflores 140 fraccionamietno la Hacienda Morelia Michoacán</Typography>
             </Grid>
+            <Toolbar /><Toolbar /><Toolbar /><Toolbar /><Toolbar /><Toolbar /><Toolbar /><Toolbar /><Toolbar /><Toolbar /><Toolbar /><Toolbar /><Toolbar />
+            hola
         </>
     )
 }
