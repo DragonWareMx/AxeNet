@@ -7,7 +7,7 @@ import './styles/calendarStyle.css'
 import { borderBottom } from '@mui/system';
 // import 'react-calendar/dist/Calendar.css';
 
-const Profile = ({  }) => {
+const view = ({  }) => {
 
     return (
 
@@ -82,6 +82,6 @@ const Profile = ({  }) => {
     )
 }
 
-Profile.layout = page => <Layout children={page} title="Perfil" />
+view.layout = page => <Layout children={page} title="Calendario" />
 
-export default Profile 
+export default view 

@@ -35,3 +35,15 @@ Route::get('/profile',function (){
 Route::get('/calendar',function (){
     return Inertia::render('Calendar');
 });
+
+Route::get('/record',function (){
+    return Inertia::render('Record');
+});
+
+Route::get('/tcp/create',function (){
+    return Inertia::render('TCPForm');
+});
+
+Route::get('/dispatch/create',function (){
+    return Inertia::render('Dispatch');
+});
