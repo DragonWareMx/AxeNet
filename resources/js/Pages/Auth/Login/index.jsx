@@ -6,14 +6,24 @@ import {
     TextField,
     FormControlLabel,
     Checkbox,
+    Slide,
 } from "@mui/material";
 import React, { useEffect, useState, useRef } from "react";
 import "./styles/loginStyle.css";
 import Cuadro from "./assets/CuadroRegistro.png";
 import XInicio from "./assets/XInicio.png";
+import Robot from "./assets/RobotInicio.png";
 import styled from "@emotion/styled";
 import route from "ziggy-js";
 import { Inertia } from "@inertiajs/inertia";
+import { InertiaLink, usePage } from "@inertiajs/inertia-react";
+import MuiAlert from "@mui/material/Alert";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const LoginTextField = styled(TextField)({
     "& label.Mui-focused": {
@@ -60,58 +70,12 @@ const CustomButton = styled(Button)({
     },
 });
 
-const useStyles = {
-    formulario: {
-        padding: "0px",
-        marginBottom: "20px",
-        display: "flex",
-        justifyContent: "center",
-        flexWrap: "wrap",
-    },
-    textField: {
-        minWidth: "250px",
-        maxWidth: "100%",
-        fontFamily: "Montserrat",
-        fontStyle: "normal",
-        fontWeight: "400",
-        fontSize: "15px",
-        lineHeight: "23px",
-        borderColor: "#919EAB",
-        borderRadius: "16px",
-        marginBottom: "24px",
-        color: "white !important",
-        "&:not(.Mui-disabled):hover::before": {
-            borderColor: "white",
-        },
-    },
-    formTextLabel: {
-        fontFamily: "Montserrat",
-        fontSize: "14px",
-        lineHeight: "19.5px",
-        color: "#919EAB",
-    },
-    helperText: {
-        marginTop: "-12px",
-        fontFamily: "Montserrat",
-        fontSize: "14px",
-    },
-    closeButton: {
-        position: "absolute",
-        right: "12px",
-        top: "12px",
-        color: "gray",
-    },
-    input: {
-        WebkitBoxShadow: "0 0 0 1000px red inset",
-    },
-};
-
 const Login = () => {
     useEffect(() => {
         document.title = "AxeNet - Login";
     }, []);
 
-    const [checked, setchecked] = useState(true);
+    const { errors, status } = usePage().props;
     const [values, setValues] = useState({
         email: "",
         password: "",
@@ -154,11 +118,105 @@ const Login = () => {
         });
     }
 
+    const containerRef = useRef(null);
+    //FLASH Y ALERTS
+    const { flash } = usePage().props;
+
+    const [open, setOpen] = React.useState({
+        tipo: null,
+    });
+    const [alert, setAlert] = React.useState({
+        openError: flash.error ? true : false,
+        error: flash.error,
+        openWarning: flash.message ? true : false,
+        warning: flash.message,
+        openSuccess: flash.success ? true : false,
+        success: flash.success,
+    });
+
+    //detecta cuando un nuevo mensaje es recibido, cierra todas las alertas y cambia el mensaje
+    useEffect(() => {
+        if (flash.error) {
+            setAlert((state) => ({
+                ...state,
+                openError: false,
+                error: flash.error,
+                openWarning: false,
+                openSuccess: false,
+            }));
+            setTimeout(function () {
+                setOpen({ tipo: "error" });
+            }, 100);
+        } else if (flash.success) {
+            setAlert((state) => ({
+                ...state,
+                openError: false,
+                openWarning: false,
+                openSuccess: false,
+                success: flash.success,
+            }));
+            setTimeout(function () {
+                setOpen({ tipo: "success" });
+            }, 100);
+        } else if (flash.message) {
+            setAlert((state) => ({
+                ...state,
+                openError: false,
+                openWarning: false,
+                warning: flash.message,
+                openSuccess: false,
+            }));
+            setTimeout(function () {
+                setOpen({ tipo: "warning" });
+            }, 100);
+        }
+    }, [flash]);
+
+    //abre de nuevo la alerta
+    useEffect(() => {
+        switch (open.tipo) {
+            case "error":
+                setAlert((state) => ({
+                    ...state,
+                    openError: true,
+                }));
+                setOpen({ tipo: null });
+                break;
+            case "success":
+                setAlert((state) => ({
+                    ...state,
+                    openSuccess: true,
+                }));
+                setOpen({ tipo: null });
+                break;
+            case "warning":
+                setAlert((state) => ({
+                    ...state,
+                    openWarning: true,
+                }));
+                setOpen({ tipo: null });
+                break;
+            default:
+                break;
+        }
+    }, [open]);
+
     return (
         <div className="fondo">
             <Container>
                 <Grid container className="grid-login">
-                    <Grid item xs={0} md={7}></Grid>
+                    <Grid
+                        item
+                        xs={0}
+                        md={7}
+                        style={{
+                            justifyContent: "flex-end",
+                            alignItems: "flex-end",
+                        }}
+                        sx={{ display: { xs: "none", md: "flex" } }}
+                    >
+                        <img src={Robot} alt="Robot" className="robot-img" />
+                    </Grid>
                     <Grid
                         item
                         xs={12}
@@ -169,7 +227,12 @@ const Login = () => {
                             alignItems: "center",
                         }}
                     >
-                        <Paper elevation={16} square className="login-paper">
+                        <Paper
+                            elevation={16}
+                            square
+                            className="login-paper"
+                            ref={containerRef}
+                        >
                             <div>
                                 <div className="header-login">
                                     <img
@@ -177,20 +240,25 @@ const Login = () => {
                                         alt="img"
                                         height={"80px"}
                                     />
-                                    <Button
-                                        variant="text"
+                                    <InertiaLink
                                         href={route("register")}
-                                        sx={{
-                                            fontSize: "25px",
-                                            padding: 0,
-                                            height: "30px",
-                                            color: "#FFFFFF",
-                                            marginTop: 1,
-                                            fontWeight: 600,
-                                        }}
+                                        style={{ textDecoration: "none" }}
                                     >
-                                        REGISTRO
-                                    </Button>
+                                        <Button
+                                            variant="text"
+                                            href={route("register")}
+                                            sx={{
+                                                fontSize: "25px",
+                                                padding: 0,
+                                                height: "30px",
+                                                color: "#FFFFFF",
+                                                marginTop: 1,
+                                                fontWeight: 600,
+                                            }}
+                                        >
+                                            REGISTRO
+                                        </Button>
+                                    </InertiaLink>
                                 </div>
 
                                 <div className="container-inputs-login">
@@ -238,6 +306,77 @@ const Login = () => {
                                             onChange={handleChange}
                                         />
                                     </form>
+
+                                    {/* SUCCESS */}
+                                    {status && (
+                                        <Slide
+                                            direction="right"
+                                            in={true}
+                                            container={containerRef.current}
+                                        >
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                className="error-grid success-grid"
+                                            >
+                                                <CheckCircleOutlineIcon
+                                                    style={{
+                                                        fontSize: "19px",
+                                                        color: "#B5FF93",
+                                                        marginRight: "10px",
+                                                    }}
+                                                />
+                                                {status}
+                                            </Grid>
+                                        </Slide>
+                                    )}
+
+                                    {/* ERROR    */}
+                                    {values.error && (
+                                        <Slide
+                                            direction="right"
+                                            in={true}
+                                            container={containerRef.current}
+                                        >
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                className="error-grid"
+                                            >
+                                                <ErrorOutlineIcon
+                                                    style={{
+                                                        fontSize: "19px",
+                                                        color: "#2196F3",
+                                                        marginRight: "10px",
+                                                    }}
+                                                />
+                                                ERROR: {errors.email}
+                                            </Grid>
+                                        </Slide>
+                                    )}
+
+                                    {alert.success && (
+                                        <Slide
+                                            direction="right"
+                                            in={true}
+                                            container={containerRef.current}
+                                        >
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                className="error-grid success-grid"
+                                            >
+                                                <CheckCircleOutlineIcon
+                                                    style={{
+                                                        fontSize: "19px",
+                                                        color: "#B5FF93",
+                                                        marginRight: "10px",
+                                                    }}
+                                                />
+                                                {alert.success}
+                                            </Grid>
+                                        </Slide>
+                                    )}
                                 </div>
                             </div>
                             <div className="login-buttons-container">
@@ -264,18 +403,23 @@ const Login = () => {
                                         },
                                     }}
                                 />
-                                <Button
-                                    variant="text"
-                                    LinkComponent={"a"}
+                                <InertiaLink
                                     href={route("password.request")}
-                                    sx={{
-                                        color: "#3a3a3a",
-                                        marginTop: 1,
-                                        fontWeight: 600,
-                                    }}
+                                    style={{ textDecoration: "none" }}
                                 >
-                                    RECUPERAR CONTRASEÑA
-                                </Button>
+                                    <Button
+                                        variant="text"
+                                        href={route("password.request")}
+                                        sx={{
+                                            color: "#3a3a3a",
+                                            marginTop: 1,
+                                            fontWeight: 600,
+                                        }}
+                                    >
+                                        RECUPERAR CONTRASEÑA
+                                    </Button>
+                                </InertiaLink>
+
                                 <CustomButton
                                     variant="contained"
                                     sx={{

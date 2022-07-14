@@ -38,6 +38,27 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             //
+            'auth.user' => fn () => $request->user()
+                ? $request->user()
+                : null,
+            // 'auth.roles' => fn () => 
+            //     $request->user() ?
+            //         $request->user()->roles()->get(['slug'])->pluck('slug')->toArray() ?? null
+            //     :
+            //     null,
+
+            'status' => function () use ($request) {
+                return  $request->session()->get('status');
+            },
+
+            'flash' => [
+                'message' => fn () => $request->session()->get('message'),
+                'error' => fn () => $request->session()->get('error'),
+                'success' => fn () => $request->session()->get('success'),
+                'info' => fn () => $request->session()->get('info'),
+                'status' => fn () => $request->session()->get('status'),
+                'data' => fn () => $request->session()->get('data'),
+            ],
         ]);
     }
 }
